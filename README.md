@@ -46,11 +46,11 @@ to go:
 
     ./build.sh ./workspace fetch-only
     cp ./workspace/chromium/src/build/install-build-deps.sh .
-    docker build -t courgette-build .
+    docker build -t zucchini-build .
 
 To execute a build inside the container, run:
 
-    docker run -v "$(pwd)/workspace:/ws" courgette-build
+    docker run -v "$(pwd)/workspace:/ws" zucchini-build
 
 ### macOS host notes
 
