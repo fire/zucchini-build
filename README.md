@@ -1,21 +1,19 @@
 # Courgette Builder
 
-Google Chrome uses a binary patching tool called Courgette to provide efficient
-software updates. The technology is described here:
+Google Chrome uses a binary patching tool called Zucchini to provide efficient
+software updates.
 
-https://www.chromium.org/developers/design-documents/software-updates-courgette
-
-Courgette lives inside the Chromium repository and must be compiled using the
+Zucchini lives inside the Chromium repository and must be compiled using the
 complex Chromium build system. It is not offered as an official standalone
 installable package.
 
 This repository contains a build script that automates the process of compiling
-Courgette.
+Zucchini.
 
 Prebuilt packages may be found on the [release page][releases], but these are
 not kept up to date.
 
-[releases]: https://github.com/rgov/courgette-build/releases
+[releases]: https://github.com/fire/zucchini-build/releases
 
 
 ## Debian and macOS
@@ -29,10 +27,10 @@ The build script handles the rest:
 
     ./build.sh ./workspace
 
-This produces a binary at `./workspace/chromium/src/out/Default/courgette`.
+This produces a binary at `./workspace/chromium/src/out/Default/zucchini`.
 
 It also produces a Debian package at
-`./workspace/courgette-linux_{version}-{date}+{revision}_{arch}.deb` for Linux 
+`./workspace/zucchini-linux_{version}-{date}+{revision}_{arch}.deb` for Linux 
 builds, or a similarly-named zip archive for macOS builds.
 
 Use `ldd` (Linux) or `otool -L` (macOS) to view which shared libraries that
