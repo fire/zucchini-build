@@ -34,7 +34,7 @@ It also produces a Debian package at
 builds, or a similarly-named zip archive for macOS builds.
 
 Use `ldd` (Linux) or `otool -L` (macOS) to view which shared libraries that
-Courgette links against, such as `libbase` and `libc++`.
+Zucchini links against, such as `libbase` and `libc++`.
 
 
 ## Debian, using a Docker container
