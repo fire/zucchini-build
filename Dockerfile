@@ -1,15 +1,22 @@
 # Dockerfile for a container capable of building the Courgette target of
 # Chromium for Linux.
 
-FROM ubuntu:trusty
+FROM ubuntu:bionic
 
 WORKDIR /root
+
+ENV TZ=America/Vancouver
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TAR_OPTIONS=" --no-same-owner"
 
 # Install bootstrap dependencies
 RUN apt-get update && apt-get install -y \
         curl \
         git \
-        python
+        python \
+        lsb-release \
+	sudo
 
 # Install the build dependencies
 COPY install-build-deps.sh .
