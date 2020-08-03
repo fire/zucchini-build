@@ -1,4 +1,4 @@
-# Courgette Builder
+# Zucchini Builder
 
 Google Chrome uses a binary patching tool called Zucchini to provide efficient
 software updates.
