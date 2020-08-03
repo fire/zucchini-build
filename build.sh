@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-# This script builds the Courgette target from Chromium. It works on macOS and
+# This script builds the Zucchini target from Chromium. It works on macOS and
 # Linux. Please see the accompanying README.md file.
 #
 # https://www.chromium.org/developers/how-tos/get-the-code
@@ -93,9 +93,9 @@ if [ ! -d chromium/src/out/Default ]; then
 fi
 
 # Build Courgette
-status "[*] Building Courgette"
+status "[*] Building Zucchini"
 pushd chromium/src
-autoninja -C out/Default courgette
+autoninja -C out/Default zucchini
 popd
 touch .first-build-finished
 
@@ -111,31 +111,31 @@ if [ "$(uname -s)" = "Linux" ]; then
   status "[*] Creating Debian package"
   
   # Copy the packaging template into the workspace
-  rm -rf courgette
-  cp -r "$(dirname "$0")"/deb-package courgette
+  rm -rf zucchini
+  cp -r "$(dirname "$0")"/deb-package zucchini
   
   # Copy the Courgette binary into the package
-  mkdir -p courgette/usr/bin
-  cp chromium/src/out/Default/courgette courgette/usr/bin
+  mkdir -p zucchini/usr/bin
+  cp chromium/src/out/Default/zucchini zucchini/usr/bin
   
   # Copy all built libraries it depends on in as well
-  mkdir -p courgette/usr/lib
-  LIBDEPS=$(ldd chromium/src/out/Default/courgette \
+  mkdir -p zucchini/usr/lib
+  LIBDEPS=$(ldd chromium/src/out/Default/zucchini \
     | grep 'chromium' \
     | awk '{ print $3 }')
-  cp $LIBDEPS courgette/usr/lib
+  cp $LIBDEPS zucchini/usr/lib
   
   # Patch up the control file
   ARCH=$(dpkg --print-architecture)
   sed -i \
     -e "s/@VERSION@/$VERSION/g" \
     -e "s/@ARCH@/$ARCH/g" \
-    courgette/DEBIAN/control
+    zucchini/DEBIAN/control
   
   # Build the package
-  dpkg-deb --build courgette
-  mv courgette.deb "courgette-linux_${VERSION}_${ARCH}.deb"
-  rm -rf courgette
+  dpkg-deb --build zucchini
+  mv zucchini.deb "zucchini-linux_${VERSION}_${ARCH}.deb"
+  rm -rf zucchini
 fi
 
 # Build a zip archive on macOS
@@ -143,19 +143,19 @@ if [ "$(uname -s)" = "Darwin" ]; then
   status "[*] Creating archive"
   
   # Create the archive directory
-  rm -rf courgette
-  mkdir courgette
+  rm -rf zucchini
+  mkdir zucchini
   
-  # Copy the courgette binary into the directory
-  cp chromium/src/out/Default/courgette courgette
-  LIBDEPS=$(otool -L chromium/src/out/Default/courgette \
+  # Copy the zucchini binary into the directory
+  cp chromium/src/out/Default/zucchini zucchini
+  LIBDEPS=$(otool -L chromium/src/out/Default/zucchini \
     | grep '@rpath' \
     | awk '{ print $1 }' \
     | sed 's,@rpath/,chromium/src/out/Default/,g')
-  cp $LIBDEPS courgette
+  cp $LIBDEPS zucchini
   
   # Make the zip archive
   ARCH=$(uname -m)
-  zip -r "courgette-mac_${VERSION}_${ARCH}.zip" courgette
-  rm -rf courgette
+  zip -r "zucchini-mac_${VERSION}_${ARCH}.zip" zucchini
+  rm -rf zucchini
 fi
