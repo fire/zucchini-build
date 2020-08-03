@@ -1,4 +1,4 @@
-Package: courgette
+Package: zucchini 
 Version: @VERSION@
 Architecture: @ARCH@
 Maintainer: "K. S. Ernest (iFire) Lee" <ernest.lee@chibifire.com>
